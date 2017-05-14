@@ -14,7 +14,7 @@ RUN addgroup --system xusers \
 			xclient
 
 # Change to use China mirror, to speed up the apt download speed for test
-# RUN sed -i 's/archive.ubuntu/cn.archive.ubuntu/g' /etc/apt/sources.list
+# RUN sed -i 's/archive.ubuntu/cn.archive.ubuntu/g' /etc/apt/sources.list 
 
 # Install packages required for connecting against X Server
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -33,9 +33,9 @@ VOLUME /Xauthority
 # start x11vnc and expose its port
 ENV DISPLAY :0.0
 EXPOSE 5900
-COPY docker-entrypoint.sh /startx11.sh
-RUN chmod +x /startx11.sh
+COPY *.sh /scripts/
+RUN chmod +x /scripts/*.sh
 
 # During startup we need to prepare connection to X11-Server container
 USER xclient
-ENTRYPOINT ["/startx11.sh"]
+ENTRYPOINT ["/scripts/x11-entrypoint.sh"]
