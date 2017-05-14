@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Jan Suchotzki <jan@suchotzki.de>
+MAINTAINER Minglei Hei <mythay@126.com>
 
 # first create user and group for all the X Window stuff
 # required to do this first so we have consistent uid/gid between server and client container
@@ -13,8 +13,10 @@ RUN addgroup --system xusers \
 			--quiet \
 			xclient
 
+# Change to use China mirror, to speed up the apt download speed for test
+# RUN sed -i 's/archive.ubuntu/cn.archive.ubuntu/g' /etc/apt/sources.list
+
 # Install packages required for connecting against X Server
-RUN sed -i 's/archive.ubuntu/cn.archive.ubuntu/g' /etc/apt/sources.list
 RUN apt-get update && apt-get install -y --no-install-recommends \
 				xvfb \
 				rxvt \
@@ -31,9 +33,9 @@ VOLUME /Xauthority
 # start x11vnc and expose its port
 ENV DISPLAY :0.0
 EXPOSE 5900
-COPY docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY docker-entrypoint.sh /startx11.sh
+RUN chmod +x /startx11.sh
 
 # During startup we need to prepare connection to X11-Server container
 USER xclient
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/startx11.sh"]

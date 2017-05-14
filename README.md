@@ -21,6 +21,6 @@ Then you enter the container's shell, then you can run
 
 You can see the window if you use a VNC Viewer connect to the container.
 
-**ATTENTION:** It's important that the `entrypoint.sh` script is executed. So if you like to supply your own `ENTRYPOINT` in an image derived from this, ensure that the `/entrypoint.sh` is executed first thing during container startup.
+**ATTENTION:** It's important that the `startx11.sh` script is executed. So if you like to supply your own `ENTRYPOINT` in an image derived from this, ensure that the `/startx11.sh` is executed first thing during container startup.
 
 
