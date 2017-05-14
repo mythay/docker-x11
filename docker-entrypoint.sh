@@ -28,5 +28,3 @@ export DISPLAY=localhost:0
 
 # we also need to use the proper magic cookie for authorization
 xauth merge /Xauthority/xserver.xauth
-
-exec "$@"
